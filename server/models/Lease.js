@@ -6,10 +6,10 @@ const mongoose = require('mongoose');
 const LeaseSchema = new mongoose.Schema({
     // ไม่ต้องมี _id เพราะ Mongoose จัดการให้เอง
 
-    tenant: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Tenant', 
-        required: true 
+    tenant: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tenant',
+        required: true
     },
     property: { 
         type: mongoose.Schema.Types.ObjectId, 
