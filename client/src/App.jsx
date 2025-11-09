@@ -1,19 +1,23 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Layout/Header';
 import DashboardPage from './pages/DashboardPage';
 import Sidebar from './components/Layout/Sidebar';
+import MobileNavBar from './components/Layout/MobileNavBar';
+import FinancePage from './pages/FinancePage';
 
 function App() {
   return (
-    // Component หลักที่จะประกอบ  Sidebar และ Main Content
-    <div className="min-h-screen bg-gray-50">
+    <BrowserRouter>
+    {/*// Component หลักที่จะประกอบ  Sidebar และ Main Content*/}
+    <div className="min-h-screen  bg-white">
        
           {/* 1. HEADER (Fixed) */}
       <Header />
 
           {/* 2.1 Sidebar (จะถูกสร้างในขั้นตอนถัดไป) */}
           {/* ในตอนนี้เราจะสร้าง div เปล่าๆ เพื่อกันพื้นที่ไว้ก่อน และซ่อนใน Mobile */}
-          <aside className="hidden lg:block w-64 bg-white border-r shadow-xl flex-shrink-0 fixed top-0 h-screen z-10]">
+          <aside className="hidden lg:block w-64 bg-white border-r shadow-xl flex-shrink-0 fixed top-0 h-screen z-10">
           <Sidebar />
           {/* Sidebar Component จะอยู่ที่นี่ */}
           </aside>
@@ -23,13 +27,19 @@ function App() {
           {/* 3. Main Content (DashboardPage) */}
                 <main className="flex-1 lg:ml-64 w-full">
                   <div className="pt-16">
-                <DashboardPage />
-                </div>
-          </main>
+                    {/* **ใช้ Routes และ Route เพื่อกำหนดการเปลี่ยนหน้า** */}
+            <Routes>
+              <Route path="/" element={<DashboardPage />} />
+              <Route path="/finance" element={<FinancePage />} />
+            </Routes>
+              </div>
+            </main>
+
           {/* 4. Mobile Bottom Nav (จะถูกสร้างในขั้นตอนถัดไป) */}
           {/* วางไว้ใน div นอกสุดเพื่อจัดการตำแหน่ง Fixed */}
+          <MobileNavBar />
           </div>
-   
+    </BrowserRouter>
 
 
   );

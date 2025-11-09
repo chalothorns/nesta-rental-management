@@ -14,7 +14,7 @@ const mockBills = [
 const UpcomingBillsTable = () => {
     return (
         // Container Card: พื้นหลังสีขาว, Shadow, และ Padding
-        <div className=" p-6 shadow-lg rounded-2xl mt-5 bg-white">
+        <div className=" p-6 shadow-lg rounded-2xl mt-5 bg-grey-400 border border-gray-300 mb-16">
             
             {/* Header */}
             <div className="flex items-center mb-6">

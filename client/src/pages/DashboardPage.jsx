@@ -13,7 +13,7 @@ function DashboardPage() {
     ];
 
     return (
-        <div className="flex-1  p-4 lg:p-8  text-gray-800 "> 
+        <div className="flex-1  p-4 lg:p-8  text-gray-800 max-w-screen-xl"> 
             
             {/* ✅ 1. WRAPPER สำหรับ Title และ Subtitle */}
             <div className="mb-6 ">

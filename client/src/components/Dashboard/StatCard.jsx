@@ -4,8 +4,8 @@ import { Home, CheckCircle, AlertCircle} from 'lucide-react';
 
 const StatCard = ({ title, count, description, buttonText, type }) => {
     // กำหนดสีตามประเภทการ์ด (ใช้สีตามรูปที่คุณต้องการ)
-    const baseColor = type === 'overdue' ? 'border-red-300 bg-[#faf1f1]':
-                      type === 'paid' ? 'border-[#96e2c2] bg-[#f2f8f4]' :  
+    const baseColor = type === 'overdue' ? 'border-red-300 bg-[#fac7c729]':
+                      type === 'paid' ? 'border-[#96e2c2] bg-[#bafcd014]' :  
                       'border-gray-300 bg-blue-50';
     
     
