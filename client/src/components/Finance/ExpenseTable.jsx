@@ -25,16 +25,16 @@ const getAmountClasses = (amount) => {
 const ExpenseTable = () => {
     return (
         // Container Card: เพิ่ม mb-8 สำหรับระยะห่างด้านล่าง
-        <div className="p-6 shadow-lg rounded-xl mt-5 bg-white border border-gray-200 mb-8">
+        <div className="lg:p-6 rounded-xl mt-1 lg:mt-0 bg-white mb-8 ">
             
             {/* Header */}
             <div className="flex items-center mb-6">
-                <h2 className="text-xl font-semibold text-gray-800">รายการล่าสุด</h2>
+                <h2 className="text-2xl font-semibold text-gray-800">รายการล่าสุด</h2>
             </div>
             
             {/* Table: Responsive Container */}
             <div className="overflow-x-auto">
-                <table className="min-w-[500px] divide-y divide-gray-200">
+                <table className="w-full  divide-y divide-gray-200">
                     {/* Table Head: กำหนด 4 คอลัมน์ */}
                     <thead>
                         <tr>

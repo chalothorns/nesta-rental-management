@@ -53,8 +53,7 @@ function FinancePage () {
             </div>
             
             {/* ส่วนที่ 3: ตารางสรุปรายการ (Table) */}
-            <div className="bg-white shadow-lg rounded-xl p-6">
-                <h2 className="text-xl font-semibold mb-4">รายการล่าสุด</h2>
+            <div className="bg-white shadow-lg rounded-xl p-6 border border-gray-200 mb-14">
                 {/* 💡 Q3: คุณจะใช้โครงสร้างตารางคล้ายกับ UpcomingBillsTable เพื่อแสดงรายการ รายรับ/รายจ่าย ล่าสุดอย่างไร? */}
                 <ExpenseTable />
             </div>

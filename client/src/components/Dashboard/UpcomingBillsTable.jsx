@@ -17,7 +17,7 @@ const UpcomingBillsTable = () => {
         <div className=" p-6 shadow-lg rounded-2xl mt-5 bg-grey-400 border border-gray-300 mb-16">
             
             {/* Header */}
-            <div className="flex items-center mb-6">
+            <div className="flex items-center mb-6 ">
                 <Calendar className="w-6 h-6 text-[#53b8e0] mr-3" />
                 <h2 className="text-xl font-semibold text-gray-800">บิลที่กำลังจะถึงกำหนด</h2>
             </div>
@@ -25,13 +25,13 @@ const UpcomingBillsTable = () => {
             {/* Table: Responsive Container */}
             <div className="overflow-x-auto 
             ">
-                <table className="lg:min-w-0 divide-y divide-gray-200">
+                <table className="w-full divide-y divide-gray-200">
                     {/* Table Head */}
                     <thead>
                         <tr>
-                            <th className="w-1/2 px-4 py-3 text-left text-sm font-semi-bold  text-black-500 uppercase tracking-wider">ผู้เช่า</th>
-                            <th className="px-4 py-3 text-left text-sm font-semi-blod text-black-500 uppercase tracking-wider hidden sm:table-cell w-1/6">ห้อง</th>
-                            <th className="w-[15%]
+                            <th className=" px-4 py-3 text-left text-sm font-semi-bold  text-black-500 uppercase tracking-wider">ผู้เช่า</th>
+                            <th className="px-4 py-3 text-left text-sm font-semi-blod text-black-500 uppercase tracking-wider hidden sm:table-cell ">ห้อง</th>
+                            <th className="
                             px-4 py-3 text-right text-sm font-semi-blod text-black-500 uppercase tracking-wider">จำนวนเงิน</th>
                             <th className="
                             px-4 py-3 text-center text-sm font-semi-blod text-black-500 uppercase tracking-wider">กำหนดชำระ</th>
