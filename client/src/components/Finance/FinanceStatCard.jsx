@@ -45,7 +45,7 @@ const FinanceStatCard = ({ title, value, period, type }) => {
     // 2. JSX สำหรับ Card ที่สมบูรณ์
     return (
         // บรรทัดนี้คือกรอบของกล่อง 3 กล่อง สี แสง เงา
-        <div className={`p-10 ml-5 md:block rounded-xl shadow-lg  border border ${currentType.borderColor} ${currentType.bg}`}>
+        <div className={`p-10 ml-5 md:block rounded-xl shadow-lg  border ${currentType.borderColor} ${currentType.bg}`}>
             {/* บรรทัดนี้สำหรับกำหนดระยะของกล่อง */}
             <div className="flex justify-between items-start mb-2">
                 <div>

@@ -7,6 +7,7 @@ import MobileNavBar from './components/Layout/MobileNavBar';
 import FinancePage from './pages/FinancePage';
 import MessagePage from './pages/MessagePage';
 import MaintenancePage from './pages/MaintenancePage';
+import MeterPage from './pages/MeterPage';
 
 
 function App() {
@@ -33,9 +34,11 @@ function App() {
                     {/* **ใช้ Routes และ Route เพื่อกำหนดการเปลี่ยนหน้า** */}
             <Routes>
               <Route path="/" element={<DashboardPage />} />
-              <Route path="/finance" element={<FinancePage />} />
-              <Route path="/messages" element={<MessagePage />} />
+
+              <Route path="/meters" element={<MeterPage />} />
               <Route path="/maintenance" element={<MaintenancePage />} />
+              <Route path="/messages" element={<MessagePage />} />
+              <Route path="/finance" element={<FinancePage />} />
             </Routes>
               </div>
             </main>
