@@ -28,7 +28,7 @@ function FinancePage () {
         }
     ];
     return (
-        <div className="p-6 lg:p-10 min-h-screen lg:max-w-5xl 2xl:max-w-7xl justify-center">
+        <div className="p-6 md:p-8 min-h-screen lg:max-w-5xl 2xl:max-w-7xl justify-center">
             <h1 className="text-3xl font-bold text-gray-900 mb-2 ">สรุปการเงิน</h1>
             <p className="text-gray-600 mt-3">ติดตามรายรับรายจ่ายของการเช่า</p>
             
