@@ -3,13 +3,12 @@ import { LuMapPin } from "react-icons/lu";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { TbPhone } from "react-icons/tb";
 import { HiOutlineMail } from "react-icons/hi";
-import { Link } from "react-router-dom";
 
 
-const TenantCard = ({onClickDetail}) => {
+const TenantCard = ({onClickDetail, name, room}) => {
   return (
    
-    <div className="w-full md:w-[350px] lg:w-[400px] shadow-lg rounded-2xl p-6 mt-4 border-2 hover:-translate-y-3 transition duration-300 ">
+    <div className="w-full md:w-[350px] shadow-lg rounded-2xl p-6 mt-4 border-2 hover:-translate-y-3 transition duration-300 ">
             
             {/* 1. ส่วนเนื้อหาด้านบน (Title, Count, Icon) อยู้ชิดซ้าย */}
             <div className="relative flex col items-center">
@@ -18,10 +17,10 @@ const TenantCard = ({onClickDetail}) => {
                 </div>
 
                 <div>
-                <p className="text-lg font-semibold">John Smith</p>
+                <p className="text-lg font-semibold">{name}</p>
                 <div className="flex mb-6 mt-2">
                 <LuMapPin className="w-4 h-4 text-[#53b8e0] mr-1" />
-                <p className="text-sm  text-gray-500">Room 101 - Building A</p>
+                <p className="text-sm  text-gray-500">{room}</p>
                 </div>
                 
                 <div className="absolute right-1 top-1 cursor-pointer p-2 rounded-xl transition hover:bg-[#fa858544] ">

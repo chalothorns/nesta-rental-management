@@ -1,7 +1,7 @@
 import React from 'react'
 import { LuUpload } from 'react-icons/lu'
 
-const Step3_VehicleInfo = ({setStep, setIsModalOpen}) => {
+const Step3_VehicleInfo = ({setStep, setIsModalOpen, formData, handleChange, handleSaveTenant, modalMode }) => {
   return (
     <>
         <form className="w-full">
@@ -28,9 +28,10 @@ const Step3_VehicleInfo = ({setStep, setIsModalOpen}) => {
                   <div className="mb-4 mr-4">
                     <label className="font-medium text-gray-700">ทะเบียนรถ</label>
                     <input
+                      name="phone"
                       type="text"
-                      id="subject"
-                      name="subject"
+                      value={formData.carPlate}
+                      onChange={handleChange}
                       className="w-full px-3 py-3 rounded-xl mt-2 bg-gray-50 border border-gray-200 focus:ring-2 focus:ring-custom-blue focus:outline-none focus:ring-offset-2"
                     />
                   </div>
@@ -97,9 +98,9 @@ const Step3_VehicleInfo = ({setStep, setIsModalOpen}) => {
               <button
                 type="button"
                 className="bg-custom-blue hover:bg-[#62bee2f3] text-white mr-4 rounded-xl"
-                // onClick={() => setStep(3)}
+                onClick={() => handleSaveTenant(formData)}
               >
-                บันทึกข้อมูล
+                {modalMode === "edit"? "ยืนยันการแก้ไข" : "บันทึกข้อมูล"}
               </button>
               </div>
             </div>

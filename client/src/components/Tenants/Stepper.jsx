@@ -1,11 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Step1_GeneralInfo from "./TenantModal/Step1_GeneralInfo";
 import Step2_AdditionalInfo from "./TenantModal/Step2_AdditionalInfo";
 import Step3_VehicleInfo from "./TenantModal/Step3_VehicleInfo";
 import { LuUpload } from "react-icons/lu";
 import { AiOutlineMan, AiOutlineWoman } from "react-icons/ai";
 
-const Stepper = ({ step, setStep, isOpen, setIsModalOpen, modalMode }) => {
+const Stepper = ({ step, setStep, isOpen, setIsModalOpen, modalMode, handleSaveTenant,isModalOpen,selectedTenant, selectedProfile, setSelectedProfile,handleOpenAddModal }) => {
+
+  const [formData, setFormData] = useState({
+    name: "",
+    phone:"",
+    email:"",
+    carPlate:""
+  });
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+
+    setFormData((prev) =>({ ...prev, [name]: value
+
+    }));
+  }
+
+  
+
+  useEffect(() => {
+      if(modalMode === "edit" && selectedTenant){
+        setFormData(selectedTenant);
+      } else {
+        setFormData({name:"", phone:"", email:"", carPlate:""})
+      }
+    },[isModalOpen, modalMode, selectedTenant]);
+
   const renderStep = () => {
     switch (step) {
       case 1:
@@ -13,6 +39,9 @@ const Stepper = ({ step, setStep, isOpen, setIsModalOpen, modalMode }) => {
           <Step1_GeneralInfo
             setStep={setStep}
             setIsModalOpen={setIsModalOpen}
+            formData={formData}
+            setFormData={setFormData} 
+            handleChange={handleChange}
           />
         );
       case 2:
@@ -20,6 +49,9 @@ const Stepper = ({ step, setStep, isOpen, setIsModalOpen, modalMode }) => {
           <Step2_AdditionalInfo
             setStep={setStep}
             setIsModalOpen={setIsModalOpen}
+            formData={formData}
+            setFormData={setFormData}
+            handleChange={handleChange}
           />
         );
       case 3:
@@ -27,6 +59,11 @@ const Stepper = ({ step, setStep, isOpen, setIsModalOpen, modalMode }) => {
           <Step3_VehicleInfo
             setStep={setStep}
             setIsModalOpen={setIsModalOpen}
+            formData={formData}
+            setFormData={setFormData}
+            handleChange={handleChange}
+            handleSaveTenant={handleSaveTenant}
+            modalMode={modalMode}
           />
         );
       default:
@@ -38,6 +75,8 @@ const Stepper = ({ step, setStep, isOpen, setIsModalOpen, modalMode }) => {
   const formPopup = isOpen
     ? "max-h-screen opacity-100"
     : "max-h-0 opacity-0 overflow-hidden mt-0";
+
+    
   return (
     <div
       className={`fixed inset-0 z-50 flex items-start  justify-center bg-[#333333] bg-opacity-80 overflow-y-auto p-4 mb-20  lg:mb-0 ${formPopup}`}
@@ -59,23 +98,41 @@ const Stepper = ({ step, setStep, isOpen, setIsModalOpen, modalMode }) => {
             </h3>
             <div className="bg-slate-100 rounded-2xl p-2 mt-5">
               <h3 className="mt-2  text-lg font-semibold ">รูปโปรไฟล์</h3>
-              <div className="flex items-center">
-                <img
+
+              {/* ---------------------------Desktop-------------------------------- */}
+              
+              <div className="flex justify-center md:justify-start">
+                {selectedProfile === "man" ? 
+                (<img
                   src="./img/men-profilepic.png"
-                  alt="Description of the image"
+                  alt="man profile picture"
                   className="w-30 h-28"
-                />
-                <div className="w-fit flex gap-2">
+                />) : (<img
+                  src="./img/woman-profilepic.png"
+                  alt="woman profile picture"
+                  className="w-30 h-28" />
+                  )}
+                <div className="w-fit hidden md:flex gap-2 items-center">
                   {/* เลือก profile picture */}
                   <div className="border border-gray-200 rounded-xl bg-white hover:bg-[#D1F0E5]">
-                    <button className="flex ">
+                    <button 
+                    className="flex "
+                    onClick={() => {
+                      setSelectedProfile("man");
+                      handleOpenAddModal
+                      }}>
                       <AiOutlineMan className="w-5 h-5 text-[#53b8e0] mr-2" />
                       <p className="text-base  text-gray-500">ผู้ชาย</p>
                     </button>
                   </div>
 
                   <div className="border border-gray-200 rounded-xl bg-white hover:bg-[#D1F0E5]">
-                    <button className="flex">
+                    <button className="flex"
+                    onClick={() => 
+                      {setSelectedProfile("woman");
+                      handleOpenAddModal
+                    }}
+                    >
                       <AiOutlineWoman className="w-5 h-5 text-[#53b8e0] mr-2" />
                       <p className="text-base  text-gray-500">ผู้หญิง</p>
                     </button>
@@ -89,6 +146,36 @@ const Stepper = ({ step, setStep, isOpen, setIsModalOpen, modalMode }) => {
                   </div>
                 </div>
               </div>
+
+                  {/* ---------------------------mobile-------------------------------- */}
+              <div className=" w-fit flex gap-2 md:hidden">
+                  {/* เลือก profile picture */}
+                  <div className="border border-gray-200 rounded-xl bg-white hover:bg-[#D1F0E5]">
+                    <button 
+                    className="flex p-2 "
+                    onClick={() => setSelectedProfile("man")}>
+                      <AiOutlineMan className="w-4 h-5 text-[#53b8e0] mr-1" />
+                      <p className="text-sm  text-gray-500">ผู้ชาย</p>
+                    </button>
+                  </div>
+
+                  <div className="border border-gray-200 rounded-xl bg-white hover:bg-[#D1F0E5]">
+                    <button className="flex"
+                    onClick={() => setSelectedProfile("woman")}
+                    >
+                      <AiOutlineWoman className="w-4 h-5 text-[#53b8e0] mr-1" />
+                      <p className="text-sm  text-gray-500">ผู้หญิง</p>
+                    </button>
+                  </div>
+
+                  <div className=" border border-gray-200 rounded-xl bg-white hover:bg-[#D1F0E5]">
+                    <button className="flex">
+                      <LuUpload className="w-4 h-5 text-[#53b8e0] mr-1" />
+                      <p className="text-sm  text-gray-500">อัพโหลดรูป</p>
+                    </button>
+                  </div>
+                </div>
+              
             </div>
         </>
         )}

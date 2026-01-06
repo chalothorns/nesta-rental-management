@@ -22,17 +22,63 @@ const TenentsPage = () => {
 
   const [modalMode, setModalMode] = useState("add");
 
+  const [tenants, setTenants] = useState([
+    {id: "1", name: "John Smith", room: "101"},
+    {id: "2", name: "Jane Smith", room: "102",}
+  ])
+
+  const [selectedTenant, setSelectedTenant] = useState(null);
+
+  const [selectedTenantId, setSelectedTenantId] = useState(null);
+
   const handleOpenAddModal = () =>{
     setModalMode("add");
     setStep(1);
+    setSelectedProfile("man");
     setIsModalOpen(true);
   }
 
-  const handleOpenEditModal = () => {
+  const [selectedProfile, setSelectedProfile] = useState("man");
+
+  const handleOpenEditModal = (id) => {
+    setSelectedTenantId(id)
     setModalMode("edit");
     setStep(1);
     setIsModalOpen(true);
   }
+
+  
+
+  const handleSaveTenant = (data) => {
+    if (modalMode === "add") {
+      const newTenant = { ...data, id: Date.now()};
+      setTenants([ ...tenants, newTenant]);
+    } else {
+      const updatedTenants = tenants.map((t) =>
+      t.id === selectedTenantId ? {...t, ...data} : t
+      );
+      setTenants(updatedTenants);
+      
+    }
+    setIsModalOpen(false);
+  }
+
+  const [paymentHistory, setPaymentHistory] = useState([
+    {id: "1", month: "มกราคม", amount: "8,500", type:"unpaid"},
+    {id: "2", month: "กุมภาพันธ์", amount: "8,500",type:"unpaid"}
+  ]);
+
+  const handleChangeType = (id, newType) => {
+    setPaymentHistory(prev => 
+      prev.map(item =>
+        item.id === id
+        ? {...item, type: newType}
+        : item
+      )
+    );
+  };
+
+  
 
 
   return (
@@ -45,8 +91,16 @@ const TenentsPage = () => {
             isOpen={isModalOpen}
             setIsModalOpen={setIsModalOpen}
             modalMode={modalMode}
-            />
+            handleSaveTenant={handleSaveTenant}
+            isModalOpen={isModalOpen}
+            selectedTenant={selectedTenant}
+            selectedProfile={selectedProfile}
+            setSelectedProfile={setSelectedProfile}
+            handleOpenAddModal={handleOpenAddModal}
 
+
+            />
+            
         {view === "list" ? (
           <>
 
@@ -81,7 +135,18 @@ const TenentsPage = () => {
                     />
               </div>
               <div className="flex flex-wrap gap-6 justify-center md:justify-start">
-              <TenantCard onClickDetail={() => setView("detail")}/> 
+              {tenants.map((t) => (
+            <TenantCard 
+              key={t.id}
+              id={t.id}
+              name={t.name}
+              room={t.room}
+              onClickDetail={() =>{
+                setSelectedTenant(t);
+                setView("detail")
+              }}
+              /> 
+              ))}
               </div>
               </>
         ):( 
@@ -125,12 +190,18 @@ const TenentsPage = () => {
         </div>
 
         <div className="flex flex-wrap gap-6 justify-center md:justify-center">
-          <PaymentHistoryCard />
-          <PaymentHistoryCard />
-          <PaymentHistoryCard />
-          <PaymentHistoryCard />
-          <PaymentHistoryCard />
-          <PaymentHistoryCard />
+            {paymentHistory.map((p) => (
+              <PaymentHistoryCard
+              key={p.id}
+              month={p.month}
+              type={p.type}
+              amount={p.amount}
+              onPaid={() => handleChangeType(p.id, "paid")}
+              onOverdue={() => handleChangeType(p.id, "overdue")}
+            
+          />
+            ))}
+
         </div>
       </div>
             </div>
@@ -142,3 +213,5 @@ const TenentsPage = () => {
 };
 
 export default TenentsPage;
+
+

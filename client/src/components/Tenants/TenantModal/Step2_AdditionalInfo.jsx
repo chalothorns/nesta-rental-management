@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Step2_AdditionalInfo = ({setStep}) => {
+const Step2_AdditionalInfo = ({setStep, formData, handleChange}) => {
   return (
     <>
     <form className="w-full">
@@ -12,9 +12,10 @@ const Step2_AdditionalInfo = ({setStep}) => {
           <div className="mb-4 mr-4">
             <label className="font-medium text-gray-700">อีเมล</label>
             <input
-              type="text"
-              id="subject"
-              name="subject"
+               name="phone"
+                  type="text"
+                  value={formData.email}
+                  onChange={handleChange}
               className="w-full px-3 py-3 rounded-xl mt-2 bg-gray-50 border border-gray-200 focus:ring-2 focus:ring-custom-blue focus:outline-none focus:ring-offset-2"
             />
           </div>
