@@ -81,7 +81,7 @@ const Step3_VehicleInfo = ({setStep, setIsModalOpen, formData, handleChange, han
              <div className="flex rows justify-between mt-4">
               <button
                 type="button"
-                className="py-2 px-4 mr-3 rounded-xl hover:bg-[#D1F0E5] transition bg-white border-gray-300"
+                className="py-2 px-4 mr-3 rounded-xl text-sm md:text-base hover:bg-[#D1F0E5] transition bg-white border-gray-300"
                 onClick={() => setStep(2)}
               >
                 ย้อนกลับ
@@ -89,7 +89,7 @@ const Step3_VehicleInfo = ({setStep, setIsModalOpen, formData, handleChange, han
               <div>
               <button
                 type="button"
-                className="py-2 px-4 mr-3 rounded-xl hover:bg-[#ffc4c4] bg-white border-gray-300"
+                className="py-2 px-4 md:mr-3 rounded-xl text-sm md:text-base hover:bg-[#ffc4c4] bg-white border-gray-300"
                 onClick={() => setIsModalOpen(false)}
               >
                 ยกเลิก
@@ -97,7 +97,7 @@ const Step3_VehicleInfo = ({setStep, setIsModalOpen, formData, handleChange, han
     
               <button
                 type="button"
-                className="bg-custom-blue hover:bg-[#62bee2f3] text-white mr-4 rounded-xl"
+                className="md:mr-4 rounded-xl text-sm md:text-base bg-custom-blue hover:bg-[#62bee2f3] text-white"
                 onClick={() => handleSaveTenant(formData)}
               >
                 {modalMode === "edit"? "ยืนยันการแก้ไข" : "บันทึกข้อมูล"}

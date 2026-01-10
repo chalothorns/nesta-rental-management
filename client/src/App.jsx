@@ -7,7 +7,6 @@ import MessagePage from "./pages/MessagePage";
 import MaintenancePage from "./pages/MaintenancePage";
 import MeterPage from "./pages/MeterPage";
 import TenantsPage from "./pages/TenantsPage";
-import TenantDetail from "./components/Tenants/TenantDetail";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +21,6 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <DashboardPage /> },
       { path: "tenants", element: <TenantsPage /> },
-      { path: "tenantdetail", element: <TenantDetail /> },
       { path: "meters", element: <MeterPage /> },
       { path: "maintenance", element: <MaintenancePage /> },
       { path: "messages", element: <MessagePage /> },

@@ -7,7 +7,9 @@ import MobileMeterRecordTable from './MobileMeterRecordTable';
 
 
 
-const MeterRecordTable = ({meterData, activeTab, onRecordChange, selectedMonth, onDeleteCheck}) =>{
+const MeterRecordTable = ({meterData, activeTab, onRecordChange, selectedMonth, onDeleteCheck, prevMonthName}) =>{
+
+
 
 
     return(
@@ -27,7 +29,7 @@ const MeterRecordTable = ({meterData, activeTab, onRecordChange, selectedMonth, 
                             <th className="px-3 py-2 text-left">ห้อง</th>
                             <th className="px-3 py-2 text-left">ผู้เช่า</th>
                             {/* 💡 Table Header จะแสดงผลเหมือนกัน แต่ข้อมูลในแถวจะต่างกัน */}
-                            <th >ครั้งก่อน({selectedMonth})</th>
+                            <th >ครั้งก่อน({prevMonthName})</th>
                             <th className="px-3 py-2 text-center">ครั้งนี้</th>
                             <th>หน่วยที่ใช้</th>
                             <th>ลบ</th>
@@ -43,30 +45,17 @@ const MeterRecordTable = ({meterData, activeTab, onRecordChange, selectedMonth, 
                                 activeTab={activeTab}
                                 onRecordChange={onRecordChange}
                                 onDeleteCheck={onDeleteCheck}
+                                meterData={meterData}
+                                selectedMonth={selectedMonth}
+                                prevMonthName={prevMonthName}
                             />
                         ))}
                     </tbody>
                 </table>
                </div> 
             </div>
-               {/* 📱 2. MOBILE UI (Card List): ใช้ MobileMeterRecordTable และแสดงบน Mobile */}
-                <div className="mt-6 block md:hidden">
-                        {/* 🟢 วนลูปสร้างแถว */}
-                        {meterData && meterData.map(record => (
-                            <MobileMeterRecordTable
-                                key={record.id} // 💡 ต้องมี key!
-                                record={record}
-                                activeTab={activeTab}
-                                onRecordChange={onRecordChange}
-                                onDeleteCheck={onDeleteCheck}
-                                selectedMonth={selectedMonth}
-                            />
-                            
-                        ))}
-
-                        
-                    </div>
-
+               
+                
                     
             </div>
             
@@ -76,3 +65,4 @@ const MeterRecordTable = ({meterData, activeTab, onRecordChange, selectedMonth, 
 
 
 export default MeterRecordTable;
+

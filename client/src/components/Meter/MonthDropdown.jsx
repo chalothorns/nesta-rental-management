@@ -58,7 +58,7 @@ const MonthDropdown =({selectedMonth, onMonthChange}) =>{
                         key={month}
                         onClick={() => handleSelectMonth(month)}
                         className={`px-3 py-2 text-base cursor-pointer text-gray-600 hover:bg-[#e1fcea] hover:rounded-xl my-1 mx-1 transition
-                                ${selectedMonth === month ? 'font-semibold text-gray-700' : 'text-gray-400'} 
+                                ${selectedMonth === month ? 'font-semibold text-gray-700 bg-[#e1fcea]' : 'text-gray-400'} 
                             `}
                             >
                             {month}

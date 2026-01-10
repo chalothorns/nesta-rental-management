@@ -2,6 +2,15 @@ import React from 'react'
 import { LuUpload } from "react-icons/lu";
 
 const Step1_GeneralInfo = ({setIsModalOpen,  setStep, formData, handleChange}) => {
+  const nameParts = formData.name.trim().split(/\s+/);
+  const hasNumber = /\d/.test(formData.name);
+  const isEachPartLongEnough = nameParts.every((part) => part.length >= 2);
+    const nameError = formData.name.length !== 0 &&
+    (!formData.name.includes(" ") || hasNumber || !isEachPartLongEnough)
+      ? "โปรดกรอกชื่อผู้เช่า"
+      : null;
+      const isStep1Valid = !nameError && formData.name.trim() !== ""
+
   return (
     <>
     <form className="w-full ">
@@ -19,16 +28,21 @@ const Step1_GeneralInfo = ({setIsModalOpen,  setStep, formData, handleChange}) =
                   className="w-full px-3 py-3 rounded-xl mt-2 bg-gray-50 border border-gray-200 focus:ring-2 focus:ring-custom-blue focus:outline-none focus:ring-offset-2"
                 />
               </div>
-    
+              
               <div className="mb-4 mr-4">
-                <label className="font-medium text-gray-700">ชื่อ-นามสกุล</label>
+                <label className="font-medium text-gray-700">ชื่อ-นามสกุล <span className="text-red-600">*</span></label>
                 <input
                   name="name"
                   type="text"
                   value={formData.name}
                   onChange={handleChange}
+                  required
                   className="w-full px-3 py-3 rounded-xl mt-2 bg-gray-50 border border-gray-200 focus:ring-2 focus:ring-custom-blue focus:outline-none focus:ring-offset-2"
+                  
                 />
+                {nameError && (
+                <p className="text-red-500  mt-1 px-2">{nameError}</p>
+              )} 
               </div>
     
               <div className="mb-4 mr-4">
@@ -158,7 +172,7 @@ const Step1_GeneralInfo = ({setIsModalOpen,  setStep, formData, handleChange}) =
             <div className="flex rows justify-end mt-4">
               <button
                 type="button"
-                className="py-2 px-4 mr-3 rounded-xl hover:bg-[#ffc4c4] bg-white border-gray-300"
+                className="text-sm md:text-base py-2 px-4 mr-3 rounded-xl hover:bg-[#ffc4c4] bg-white border-gray-300"
               onClick={() => setIsModalOpen(false)
               }>
                 ยกเลิก
@@ -166,7 +180,12 @@ const Step1_GeneralInfo = ({setIsModalOpen,  setStep, formData, handleChange}) =
     
               <button
                 type="button"
-                className="bg-custom-blue hover:bg-[#62bee2f3] text-white mr-4 rounded-xl"
+                disabled={!isStep1Valid}
+                className={`text-sm md:text-base bg-custom-blue text-white mr-4 rounded-xl 
+                  ${isStep1Valid 
+                    ? "cursor-pointer hover:bg-[#62bee2f3]"
+                    : "opacity-60 cursor-default"
+                  }`}
                 onClick={() => setStep(2)}
               >
                 ถัดไป

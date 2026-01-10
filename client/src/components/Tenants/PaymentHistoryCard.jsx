@@ -30,7 +30,7 @@ const PaymentHistoryCard = ({month, type, onPaid, onOverdue, amount}) => {
                     </div>
 
                     <div className="mb-3">
-                    <button className={`rounded-xl p-3 mr-2 border-2 border-gray-300 hover:bg-[#ecfdf7] transition ${type === "paid"
+                    <button className={`rounded-xl p-3 mr-2 border-2 border-gray-300 md:hover:bg-[#ecfdf7] transition ${type === "paid"
                                             ? "bg-[#9FDFBA]"
                                             : "bg-gray-100"}`}
                     onClick={onPaid}
@@ -38,7 +38,7 @@ const PaymentHistoryCard = ({month, type, onPaid, onOverdue, amount}) => {
                       <FaRegCircleCheck className="w-5 h-5  text-gray-700 "/>
                     </button>
 
-                    <button className={`rounded-xl p-3 border-2 border-gray-300 hover:bg-[#ecfdf7] transition ${type === "overdue"
+                    <button className={`rounded-xl p-3 border-2 border-gray-300 md:hover:bg-[#ecfdf7] transition ${type === "overdue"
                                             ? "bg-[#E8867D]"
                                             : "bg-gray-100"}`}
                     onClick={onOverdue}
@@ -49,7 +49,7 @@ const PaymentHistoryCard = ({month, type, onPaid, onOverdue, amount}) => {
                     </div>
                  
                     
-                    <div className="flex justify-center items-center cursor-pointer p-5 rounded-xl hover:bg-[#d4faed] transition">
+                    <div className="flex justify-center items-center cursor-pointer p-5 rounded-xl md:hover:bg-[#d4faed] transition">
                                     <LuStickyNote className="w-6 h-6 mr-2 text-gray-700 " />
                                     <p className="">เพิ่มโน้ต</p>
                                     

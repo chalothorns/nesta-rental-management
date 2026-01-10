@@ -6,18 +6,28 @@ const MobileMeterRecordTable = ({
   activeTab,
   onRecordChange,
   onDeleteCheck,
-  selectedMonth
+  selectedMonth,
+  prevMonthName,
+  meterData
 }) => {
-  const prevField = activeTab === "electric" ? "prevElectric" : "prevWater";
+
+    const roomData = meterData.find(m => m.id === record.id)
+    const currentMonthData = roomData.monthlyRecords?.[selectedMonth] || {};
+    const prevMonthData = roomData.monthlyRecords?.[prevMonthName] || {};
+
+
   const currentField =
     activeTab === "electric" ? "currentElectric" : "currentWater";
 
-  // ดึงค่ามิเตอร์มาแปลงเป็นตัวเลข (ถ้าไม่มีค่า ให้เป็น 0)
-  const prevValue = Number(record[prevField]) || 0;
-  const currentValue = Number(record[currentField]) || 0;
+    const displayPrevValue = prevMonthData[currentField] || 0;
+    const displayValue = currentMonthData[currentField] || "";
+
+  
+  const prevValue = Number(displayPrevValue) || 0;
+  const currentValue = Number(displayValue) || 0;
 
   // คำนวณหน่วยที่ใช้ (ถ้าค่าปัจจุบันน้อยกว่าครั้งก่อน หรือยังไม่ได้กรอก ให้เป็น '-')
-  const usage = currentValue > prevValue ? currentValue - prevValue : "-";
+ const usage = (currentValue > 0 && currentValue >= prevValue) ? currentValue - prevValue : "-";
 
   // 🟢 2. ตรวจสอบเงื่อนไขการลบ: ถ้า currentValue มากกว่า 0
   const hasData = currentValue > 0;
@@ -60,10 +70,10 @@ const MobileMeterRecordTable = ({
       </div>
 
       <div className="py-4">
-        <div className="mb-2 text-sm">เลขมิเตอร์ครั้งก่อน ({selectedMonth})</div>
+        <div className="mb-2 text-sm">เลขมิเตอร์ครั้งก่อน ({prevMonthName})</div>
                 <input
                     type="number"
-                    value={record[prevField] || ''}
+                    value={displayPrevValue}
                     readOnly 
                     onChange={() => {}}
                     className="w-full h-12 px-2 py-1 text-base text-left bg-gray-100 border border-gray-200 rounded-lg cursor-not-allowed focus:outline-none"
@@ -76,8 +86,8 @@ const MobileMeterRecordTable = ({
             <div className="mb-2 text-sm ">เลขมิเตอร์ครั้งนี้</div>
                 <input
                     type="number"
-                    value={record[currentField]}
-                    onChange={(e) => onRecordChange(record.id, currentField, e.target.value)}
+                    value={displayValue}
+                    onChange={(e) => onRecordChange(record.id, selectedMonth, currentField, e.target.value)}
                     placeholder="กรอกเลข"
                     className="w-full h-12 px-2 py-1 text-base text-left border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue focus:outline-none focus:ring-offset-2"
                 />

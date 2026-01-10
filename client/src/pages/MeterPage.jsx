@@ -10,11 +10,20 @@ const DUMMY_DATA = [
     id: "1",
     room: "ห้อง 101",
     name: "Mr. Somsak",
-    // 🟢 ต้องมี Key เหล่านี้ (แม้ค่าจะเป็น 0 หรือ null)
-    prevElectric: 0,
-    currentElectric: 1300,
-    prevWater: 50,
-    currentWater: 80,
+    monthlyRecords: {
+      "มกราคม": {prevElectric: "", currentElectric: "", prevWater: "", currentWater: ""},
+      "กุมภาพันธ์": {prevElectric: "", currentElectric: "", prevWater: "", currentWater: ""},
+      "มีนาคม": {prevElectric: "", currentElectric: "", prevWater: "", currentWater: ""},
+      "เมษายน": {prevElectric: "", currentElectric: "", prevWater: "", currentWater: ""},
+      "พฤษภาคม": {prevElectric: "", currentElectric: "", prevWater: "", currentWater: ""},
+      "มิถุนายน": {prevElectric: "", currentElectric: "", prevWater: "", currentWater: ""},
+      "กรกฎาคม": {prevElectric: "", currentElectric: "", prevWater: "", currentWater: ""},
+      "สิงหาคม": {prevElectric: "", currentElectric: "", prevWater: "", currentWater: ""},
+      "กันยายน": {prevElectric: "", currentElectric: "", prevWater: "", currentWater: ""},
+      "ตุลาคม": {prevElectric: "", currentElectric: "", prevWater: "", currentWater: ""},
+      "พฤศจิกายน": {prevElectric: "", currentElectric: "", prevWater: "", currentWater: ""},
+      "ธันวาคม": {prevElectric: "", currentElectric: "", prevWater: "", currentWater: ""},
+    }
   },
 ];
 
@@ -23,10 +32,7 @@ const DEFAULT_NEW_RECORD = {
   id: Date.now().toString(),
   room: "ห้องใหม่",
   name: "ผู้เช่าใหม่",
-  prevElectric: 0,
-  currentElectric: "",
-  prevWater: 0,
-  currentWater: "",
+  monthlyRecords: {}
 };
 
 const MeterPage = () => {
@@ -45,9 +51,19 @@ const MeterPage = () => {
 
   const [currentRoom, setCurrentRoom] = useState(DUMMY_DATA[0].room); //เป็นการเข้าถึง element แรกใน array แรกและ property ที่ชื่อ room
 
+
+
+
   const mobileFilteredData = meterData.filter(record => 
     record.room === currentRoom
   );
+
+  const MONTHS = [
+    "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
+    "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+];
+const currentIndex = MONTHS.indexOf(currentMonth);
+const prevMonthName = currentIndex > 0 ? MONTHS[currentIndex - 1] : MONTHS[11];
 
   const handleRoomChange = (e) => {
     setCurrentRoom(e.target.value);
@@ -122,8 +138,8 @@ const MeterPage = () => {
     // ใช้ .some() เพื่อวนลูปและเช็คว่ามี record ใด record หนึ่งที่ตรงตามเงื่อนไข
     const isAnyRecordFilled = meterData.some((record) => {
       // ตรวจสอบทั้งมิเตอร์ไฟฟ้าและน้ำ ว่ามีค่าปัจจุบัน (current) ที่มากกว่า 0 หรือไม่
-      const electricValue = Number(record.currentElectric);
-      const waterValue = Number(record.currentWater);
+      const electricValue = Number(record.monthlyRecords?.[currentMonth]?.currentElectric || 0);
+      const waterValue = Number(record.monthlyRecords?.[currentMonth]?.currentWater || 0);
 
       // ถ้ามีค่าไฟฟ้า > 0 หรือ ค่าน้ำ > 0 ถือว่ามีข้อมูล
       return electricValue > 0 || waterValue > 0;
@@ -174,15 +190,26 @@ const MeterPage = () => {
     setActiveTab(tabName);
   };
 
-  const handleRecordChange = (id, field, value) => {
+  const handleRecordChange = (id, month, field, value) => {
     setMeterData((prevData) =>
       //return array ใหม่ ที่ถูก map() แล้ว
       prevData.map((record) => {
         //ถ้าไอดีตรงกับห้องที่กรอกข้อมูล
         if (record.id === id) {
           return {
+            //ข้อมูลก่อนๆที่มีอยู่แล้ว
             ...record,
-            [field]: value,
+            monthlyRecords: {
+              //โชว์ข้อมูลก่อนๆใน record.monthlyRecords
+              ...record.monthlyRecords,
+              //เดือนที่ผู้ใช้กำลังเลือกอยู่ จะมีข้อมูล:
+                [month]: {
+                  //ถ้ามี record ก่อนหน้าให้แสดงขึ้นมา(optional) หรือถ้าไม่มีใส่ {}
+                  ...(record.monthlyRecords?.[month] || {}),
+                  //อัปเดตช่องปัจจุบันที่กำลังกรอกตัวเลขอยู่
+                  [field]: value,
+                },
+            },
           };
         }
         return record;
@@ -255,6 +282,7 @@ const MeterPage = () => {
           onRecordChange={handleRecordChange}
           onDeleteCheck={handleCheckAndDelete}
           selectedMonth={currentMonth}
+          prevMonthName={prevMonthName}
         />
         </div>
 
@@ -267,6 +295,8 @@ const MeterPage = () => {
                     onRecordChange={handleRecordChange} 
                     onDeleteCheck={handleCheckAndDelete} 
                     selectedMonth={currentMonth}
+                    prevMonthName={prevMonthName}
+                    meterData={meterData}
                 />
             ))}
         </div> 

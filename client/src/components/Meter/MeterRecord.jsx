@@ -2,16 +2,22 @@
 
 import React from 'react';
 
-const MeterRecord = ({record, activeTab, onRecordChange, onDeleteCheck}) => {
+const MeterRecord = ({record, activeTab, onRecordChange, onDeleteCheck, meterData,selectedMonth, prevMonthName}) => {
 
+    const roomData = meterData.find(m => m.id === record.id)
+    const currentMonthData = roomData.monthlyRecords?.[selectedMonth] || {};
+    const prevMonthData = roomData.monthlyRecords?.[prevMonthName] || {};
     
     
-    const prevField = activeTab === 'electric' ? 'prevElectric' : 'prevWater';
     const currentField = activeTab === 'electric' ? 'currentElectric' : 'currentWater';
+
+    const displayPrevValue = prevMonthData[currentField] || 0;
+    const displayValue = currentMonthData[currentField] || "";
+   
     
     // ดึงค่ามิเตอร์มาแปลงเป็นตัวเลข (ถ้าไม่มีค่า ให้เป็น 0)
-    const prevValue = Number(record[prevField]) || 0;
-    const currentValue = Number(record[currentField]) || 0;
+    const prevValue = Number(displayPrevValue) || 0;
+    const currentValue = Number(displayValue) || 0;
 
     // คำนวณหน่วยที่ใช้ (ถ้าค่าปัจจุบันน้อยกว่าครั้งก่อน หรือยังไม่ได้กรอก ให้เป็น '-')
     const usage = currentValue > prevValue ? currentValue - prevValue : '-';
@@ -40,8 +46,8 @@ const MeterRecord = ({record, activeTab, onRecordChange, onDeleteCheck}) => {
             <td className="p-3 w-40">
                 <input
                     type="number"
-                    value={record[prevField] || ''}
-                    readOnly 
+                    value={displayPrevValue}
+                    readOnly
                     onChange={() => {}}
                     className="w-32 h-10 px-2 py-1 text-base text-left bg-gray-100 border border-gray-200 rounded-lg cursor-not-allowed focus:outline-none"
                 />
@@ -51,8 +57,8 @@ const MeterRecord = ({record, activeTab, onRecordChange, onDeleteCheck}) => {
             <td className="p-3 text-center">
                 <input
                     type="number"
-                    value={record[currentField]}
-                    onChange={(e) => onRecordChange(record.id, currentField, e.target.value)}
+                    value={displayValue}
+                    onChange={(e) => onRecordChange(record.id, selectedMonth, currentField, e.target.value)}
                     placeholder="0"
                     className="w-32 h-10 px-2 py-1 text-base text-left border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
                 />

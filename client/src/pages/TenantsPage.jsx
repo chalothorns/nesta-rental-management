@@ -12,20 +12,33 @@ const TenentsPage = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [step, setStep] = useState(1);
-
-  const handleOpenModal = () => {
-    setStep(1);
-    setIsModalOpen(true);
-  }
-
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [tenantIdToDelete, setTenantIdToDelete] = useState(null);
   const [view, setView] = useState("list");
-
   const [modalMode, setModalMode] = useState("add");
-
   const [tenants, setTenants] = useState([
     {id: "1", name: "John Smith", room: "101"},
     {id: "2", name: "Jane Smith", room: "102",}
-  ])
+    ])
+
+    const handleModalDelete = (tenantId) => {
+    setTenantIdToDelete(tenantId)
+    setOpenDeleteModal(true);
+  }
+
+  const handleDeleteTenant = (idToDelete) => {
+    const updatedTenants= tenants.filter((tenant) => tenant.id !== idToDelete);
+      setTenants(updatedTenants);
+  }
+
+  const handleConfirmDeletion = () => {
+    if(tenantIdToDelete){
+      handleDeleteTenant(tenantIdToDelete);
+    }
+    setOpenDeleteModal(false)
+    setTenantIdToDelete(null);
+  }
+
 
   const [selectedTenant, setSelectedTenant] = useState(null);
 
@@ -47,7 +60,6 @@ const TenentsPage = () => {
     setIsModalOpen(true);
   }
 
-  
 
   const handleSaveTenant = (data) => {
     if (modalMode === "add") {
@@ -100,7 +112,8 @@ const TenentsPage = () => {
 
 
             />
-            
+
+
         {view === "list" ? (
           <>
 
@@ -141,6 +154,7 @@ const TenentsPage = () => {
               id={t.id}
               name={t.name}
               room={t.room}
+              onDelete={() => handleModalDelete(t.id)}
               onClickDetail={() =>{
                 setSelectedTenant(t);
                 setView("detail")
@@ -148,7 +162,40 @@ const TenentsPage = () => {
               /> 
               ))}
               </div>
+
+              {/* 🔴 แสดง openDeleteModal */}
+      {openDeleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#333333] bg-opacity-80">
+          <div className="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full">
+            <h3 className="text-xl font-bold text-gray-800 mb-4">
+              ลบข้อมูลผู้เช่า
+            </h3>
+            <p className="text-gray-700 mb-6">
+              คุณแน่ใจหรือไม่ที่จะลบข้อมูลนี้? การกระทำนี้ไม่สามารถย้อนกลับได้
+            </p>
+
+            <div className="flex justify-end space-x-3">
+              {/* ปุ่มยกเลิก */}
+              <button
+                onClick={() => setOpenDeleteModal(false)}
+                className="px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 bg-gray-50 rounded-lg hover:bg-[#D1F0E5] transition"
+              >
+                ยกเลิก
+              </button>
+              {/* ปุ่มยืนยัน (ลบจริง) */}
+              <button
+                onClick={handleConfirmDeletion}
+                className="px-4 py-2 text-sm font-semibold text-white bg-[#E8867D] rounded-xl hover:bg-[#e9978f] transition"
+              >
+                ยืนยัน
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
               </>
+
+
         ):( 
 
           //  ------------------------------------------Tenant Detail------------------------------------------

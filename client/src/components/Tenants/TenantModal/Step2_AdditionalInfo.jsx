@@ -111,7 +111,7 @@ const Step2_AdditionalInfo = ({setStep, formData, handleChange}) => {
         <div className="flex rows justify-between mt-4">
           <button
             type="button"
-            className="py-2 px-4 mr-3 rounded-xl hover:bg-[#D1F0E5] transition bg-white border-gray-300"
+            className="text-sm md:text-base py-2 px-4 mr-3 rounded-xl hover:bg-[#D1F0E5] transition bg-white border-gray-300"
             onClick={() => setStep(1)}
           >
             ย้อนกลับ
@@ -119,7 +119,7 @@ const Step2_AdditionalInfo = ({setStep, formData, handleChange}) => {
 
           <button
             type="button"
-            className="bg-custom-blue hover:bg-[#62bee2f3] text-white mr-4 rounded-xl"
+            className="text-sm md:text-base bg-custom-blue hover:bg-[#62bee2f3] text-white mr-4 rounded-xl"
             onClick={() => setStep(3)}
           >
             ถัดไป

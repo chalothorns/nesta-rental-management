@@ -5,7 +5,8 @@ import { TbPhone } from "react-icons/tb";
 import { HiOutlineMail } from "react-icons/hi";
 
 
-const TenantCard = ({onClickDetail, name, room}) => {
+const TenantCard = ({onClickDetail, name, room, onDelete}) => {
+    
   return (
    
     <div className="w-full md:w-[350px] shadow-lg rounded-2xl p-6 mt-4 border-2 hover:-translate-y-3 transition duration-300 ">
@@ -23,10 +24,13 @@ const TenantCard = ({onClickDetail, name, room}) => {
                 <p className="text-sm  text-gray-500">{room}</p>
                 </div>
                 
-                <div className="absolute right-1 top-1 cursor-pointer p-2 rounded-xl transition hover:bg-[#fa858544] ">
+                <button
+                onClick={onDelete}
+                className="absolute right-1 top-1 cursor-pointer p-2 rounded-xl transition hover:bg-[#fa858544] ">
                 <RiDeleteBinLine className="w-6 h-6 text-gray-700 transition hover:text-[#fa8585]" />
+                </button>
                 </div>
-                </div>
+                
         
             </div>
 
