@@ -1,16 +1,36 @@
-# React + Vite
+### 🔑 Demo Credentials
+To access the management dashboard, please use the following admin credentials:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+* **Email:** `mali@example.com`
+* **Password:** `password123`
 
-Currently, two official plugins are available:
+> **Note:** These credentials grant administrative access to manage tenants and view payment records.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# NESTA 🏡 - Small Rental Management App
 
-## React Compiler
+A custom-built property management solution designed specifically for local rental business owners. This project was developed as a personal tool to help my mother transition from manual record-keeping to a digital system.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+🌟 Key Features
+Mobile-First Design: Optimized for mobile phones to ensure ease of use for non-tech-savvy users while managing properties on the go.
 
-## Expanding the ESLint configuration
+Tenant Management: Digital database for tenant information, contact details, and contract dates.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Payment Tracking: Visual status indicators (Paid/Unpaid/Overdue) to keep track of monthly rental income.
+
+Simple Authentication: Secure admin login to protect sensitive tenant data.
+
+Thai Language Support: Entirely localized in Thai to provide the most comfortable experience for the primary user (my mother).
+
+🛠️ Tech Stack
+Frontend: React.js, Tailwind CSS (for responsive UI), Axios.
+
+Backend: Node.js, Express.js.
+
+Database: MongoDB.
+
+Security: HTTP-only Cookies & JWT for secure session management.
+
+💡 The Goal
+The primary objective was to solve a real-world family problem: replacing paper-based records with a simple, intuitive, and reliable mobile application that anyone can use regardless of their technical background.
+
+<img width="380" height="835" alt="image" src="https://github.com/user-attachments/assets/aced5424-781d-4580-b091-62fae0da61ef" />
