@@ -4,8 +4,10 @@ import React from 'react';
 import FinanceStatCard from '../components/Finance/FinanceStatCard'; 
 import RevenueChart from '../components/Finance/RevenueChart'; 
 import ExpenseTable from '../components/Finance/ExpenseTable';
+import { useOutletContext } from 'react-router-dom';
 
 function FinancePage () {
+    const {adminUser,authLoading} = useOutletContext();
     const financeStats = [
         {
             title:'รายได้รวมต่อเดือน',
@@ -27,6 +29,15 @@ function FinancePage () {
             type: 'profit'
         }
     ];
+    
+    if (authLoading) {
+    return <div className="p-10 text-center">กำลังตรวจสอบสิทธิ์...</div>;
+  }
+
+  // 2. เช็คว่าถ้าโหลดเสร็จแล้ว แต่ไม่มีข้อมูลผู้ใช้ (ไม่ได้ Login)
+  if (!adminUser) {
+    return <div className="p-10 text-center md:text-start text-red-500">สิทธิ์การเข้าถึงถูกปฏิเสธ กรุณาล็อกอิน</div>;
+  }
     return (
         <div className="p-6 md:p-8 min-h-screen lg:max-w-5xl 2xl:max-w-7xl justify-center">
             <h1 className="text-3xl font-bold text-gray-900 mb-2 ">สรุปการเงิน</h1>

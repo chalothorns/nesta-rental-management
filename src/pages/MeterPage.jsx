@@ -4,6 +4,7 @@ import MeterHeader from "../components/Meter/MeterHeader";
 import MeterRecordTable from "../components/Meter/MeterRecordTable";
 import MobileRoomDropDown from "../components/Meter/MobileRoomDropDown";
 import MobileMeterRecordTable from "../components/Meter/MobileMeterRecordTable";
+import { useOutletContext } from "react-router-dom";
 
 const DUMMY_DATA = [
   {
@@ -36,6 +37,8 @@ const DEFAULT_NEW_RECORD = {
 };
 
 const MeterPage = () => {
+
+  const {adminUser,authLoading} = useOutletContext();
   // state สำหรับใช้คุมแท็บที่ใช้งานอยู่
   const [activeTab, setActiveTab] = useState("electric");
 
@@ -216,6 +219,15 @@ const prevMonthName = currentIndex > 0 ? MONTHS[currentIndex - 1] : MONTHS[11];
       })
     );
   };
+
+  if (authLoading) {
+    return <div className="p-10 text-center">กำลังตรวจสอบสิทธิ์...</div>;
+  }
+
+  // 2. เช็คว่าถ้าโหลดเสร็จแล้ว แต่ไม่มีข้อมูลผู้ใช้ (ไม่ได้ Login)
+  if (!adminUser) {
+    return <div className="p-10 text-center md:text-start text-red-500">สิทธิ์การเข้าถึงถูกปฏิเสธ กรุณาล็อกอิน</div>;
+  }
 
   return (
     /*max-w-7xl เพื่อจำกัดความกว้างของจอ และง่ายต่อการจัดวางองค์ประกอบข้างใน*/

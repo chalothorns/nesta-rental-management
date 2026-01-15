@@ -3,14 +3,26 @@
 import React from 'react';
 import StatCard from '../components/Dashboard/StatCard'; 
 import UpcomingBillsTable from '../components/Dashboard/UpcomingBillsTable'; // ตารางบิล
+import { useOutletContext } from 'react-router-dom';
 
 function DashboardPage() {
+
+    const {adminUser,authLoading} = useOutletContext();
     // ข้อมูล Stat Cards (ตัวอย่าง) เพื่อจะส่งเข้าไปให้ component statcard+upcomingbill
     const stats = [
         { type: 'overdue', title: 'ค้างชำระ', count: 2, description: 'ผู้เช่าที่ค้างชำระค่าเช่า', buttonText: 'ดูรายละเอียด' },
         { type: 'paid', title: 'ชำระแล้ว', count: 6, description: 'ผู้เช่าที่ชำระเงินแล้ว', buttonText: 'ดูรายชื่อผู้เช่า' },
         { type: 'total', title: 'จำนวนห้องทั้งหมด', count: 8, description: 'ห้องเช่าที่ใช้งานอยู่' }
     ];
+
+    if (authLoading) {
+    return <div className="p-10 text-center">กำลังตรวจสอบสิทธิ์...</div>;
+  }
+
+  // 2. เช็คว่าถ้าโหลดเสร็จแล้ว แต่ไม่มีข้อมูลผู้ใช้ (ไม่ได้ Login)
+  if (!adminUser) {
+    return <div className="p-10 text-center md:text-start text-red-500">สิทธิ์การเข้าถึงถูกปฏิเสธ กรุณาล็อกอิน</div>;
+  }
 
     return (
         <div className="flex-1  p-4 md:p-8  text-gray-800 min-h-screen lg:max-w-5xl 2xl:max-w-7xl"> 

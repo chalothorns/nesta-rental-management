@@ -4,9 +4,20 @@ import { FaPaperPlane} from 'react-icons/fa';
 import MessageForm from '../components/Message/MessageForm';
 import SendingOptions from '../components/Message/SendingOptions';
 import RecipientSelector from '../components/Message/RecipientSelector';
+import { useOutletContext } from 'react-router-dom';
 
 
 const MessagePage = () => {
+    const {adminUser,authLoading} = useOutletContext();
+
+    if (authLoading) {
+    return <div className="p-10 text-center">กำลังตรวจสอบสิทธิ์...</div>;
+  }
+
+  // 2. เช็คว่าถ้าโหลดเสร็จแล้ว แต่ไม่มีข้อมูลผู้ใช้ (ไม่ได้ Login)
+  if (!adminUser) {
+    return <div className="p-10 text-center md:text-start text-red-500">สิทธิ์การเข้าถึงถูกปฏิเสธ กรุณาล็อกอิน</div>;
+  }
     return (
         /*max-w-7xl เพื่อจำกัดความกว้างของจอ และง่ายต่อการจัดวางองค์ประกอบข้างใน*/ 
         <div className="flex flex-col  gap-6 p-4 md:p-8 min-h-screen md:max-w-7xl mb-20 md:mb-0"> 

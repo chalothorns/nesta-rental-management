@@ -7,9 +7,10 @@ import { FaArrowLeft } from "react-icons/fa6";
 import PaymentHistoryCard from "../components/Tenants/PaymentHistoryCard";
 import { Calendar } from "lucide-react";
 import axios from "axios";
+import { useOutletContext } from "react-router-dom";
 
 const TenentsPage = () => {
-  const apiBase = import.meta.env.VITE_API_URL;
+  const {adminUser,authLoading, apiBase} = useOutletContext();
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [tenantIdToDelete, setTenantIdToDelete] = useState(null);
@@ -24,7 +25,7 @@ const TenentsPage = () => {
   const handleConfirmDeletion = async () => {
     if (tenantIdToDelete) {
       try {
-        await axios.delete(`${apiBase}/${tenantIdToDelete}`);
+        await axios.delete(`${apiBase}/tenants/${tenantIdToDelete}`, {withCredentials: true});
 
         const updatedTenants = tenants.filter(
           (tenant) => tenant._id !== tenantIdToDelete
@@ -44,6 +45,8 @@ const TenentsPage = () => {
     setOpenDeleteModal(false);
     setTenantIdToDelete(null);
   };
+
+  const [tenantsLoading, setTenantsLoading] = useState(true);
 
   const [selectedTenant, setSelectedTenant] = useState(null);
 
@@ -115,27 +118,29 @@ const TenentsPage = () => {
 
   useEffect(() => {
     const fetchTenants = async () => {
+      setTenantsLoading(true);
       try {
-        const response = await axios.get(apiBase);
+        const response = await axios.get(`${apiBase}/tenants`, {withCredentials: true});
         setTenants(response.data?.data || []);
       } catch (error) {
         console.error("ไม่สามารถดึงข้อมูลได้:", error);
+      } finally {
+        setTenantsLoading(false); 
       }
     };
+    if (adminUser) { // โหลดข้อมูลเมื่อมี adminUser แล้วเท่านั้น
     fetchTenants();
-  }, [apiBase]);
+    }
+  }, [apiBase, adminUser]);
 
   const handleSaveTenant = async (tenantData) => {
     try {
       if (modal.mode === "add") {
-        const response = await axios.post(apiBase, tenantData);
+        const response = await axios.post(`${apiBase}/tenants`, tenantData, {withCredentials: true});
         setTenants((prev) => [...prev, response.data.data]);
       } else {
         const tenantId = tenantData._id;
-        const response = await axios.patch(
-          `${apiBase}/${tenantId}`,
-          tenantData
-        );
+        const response = await axios.patch(`${apiBase}/tenants/${tenantId}`,tenantData, {withCredentials: true});
         const newData = response.data.data;
 
         setTenants((prev) =>
@@ -157,6 +162,15 @@ const TenentsPage = () => {
       alert(error.response?.data?.message || "บันทึกไม่สำเร็จ");
     }
   };
+
+  if (authLoading) {
+    return <div className="p-10 text-center">กำลังตรวจสอบสิทธิ์...</div>;
+  }
+
+  // 2. เช็คว่าถ้าโหลดเสร็จแล้ว แต่ไม่มีข้อมูลผู้ใช้ (ไม่ได้ Login)
+  if (!adminUser) {
+    return <div className="p-10 text-center md:text-start text-red-500">สิทธิ์การเข้าถึงถูกปฏิเสธ กรุณาล็อกอิน</div>;
+  }
 
   return (
     /*max-w-7xl เพื่อจำกัดความกว้างของจอ และง่ายต่อการจัดวางองค์ประกอบข้างใน*/
@@ -203,6 +217,9 @@ const TenentsPage = () => {
               className="w-full md:w-1/3 px-10 py-3 rounded-xl mt-2 bg-gray-50 border border-gray-200 focus:ring-2 focus:ring-custom-blue focus:outline-none focus:ring-offset-2 focus:border-gray-200"
             />
           </div>
+          {tenantsLoading ? (
+            <span className="text-lg text-gray-500 animate-pulse">กำลังโหลดข้อมูลผู้เช่า...</span>
+          ) : adminUser ? (
           <div className="flex flex-wrap gap-6 justify-center md:justify-start">
             {tenants.map((t) => (
               <TenantCard
@@ -215,8 +232,8 @@ const TenentsPage = () => {
                   setView("detail");
                 }}
               />
-            ))}
-          </div>
+            ))} 
+          </div>): null}
 
           {/* 🔴 แสดง openDeleteModal */}
           {openDeleteModal && (

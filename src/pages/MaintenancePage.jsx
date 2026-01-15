@@ -2,10 +2,13 @@ import React, {useState} from 'react';
 
 import ReportIssues from '../components/Maintenance/ReportIssues';
 import MaintenanceHistory from '../components/Maintenance/MaintenanceHistory';
-import { FaPlus } from 'react-icons/fa';
+import { useOutletContext } from 'react-router-dom';
+
 
 
 const MaintenancePage = () => {
+
+    const {adminUser,authLoading} = useOutletContext();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [maintenanceIssues, setMaintenanceIssues] = useState([
     // ...
@@ -55,7 +58,14 @@ const MaintenancePage = () => {
         );
     };
 
+    if (authLoading) {
+    return <div className="p-10 text-center">กำลังตรวจสอบสิทธิ์...</div>;
+  }
 
+  // 2. เช็คว่าถ้าโหลดเสร็จแล้ว แต่ไม่มีข้อมูลผู้ใช้ (ไม่ได้ Login)
+  if (!adminUser) {
+    return <div className="p-10 text-center md:text-start text-red-500">สิทธิ์การเข้าถึงถูกปฏิเสธ กรุณาล็อกอิน</div>;
+  }
 
 
     return (
