@@ -1,8 +1,8 @@
 ### 🔑 Demo Credentials
 To access the management dashboard, please use the following admin credentials:
 
-* **Email:** `mali@example.com`
-* **Password:** `password123`
+* **Email:** `test@example.com`
+* **Password:** `test123456`
 
 > **Note:** These credentials grant administrative access to manage tenants and view payment records.
 

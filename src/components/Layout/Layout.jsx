@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import Navbar from "./Navbar";
-import Sidebar from "./Sidebar";
-import MobileNavBar from "./MobileNavBar";
+import Navbar from "./Navbar.jsx";
+import Sidebar from "./Sidebar.jsx";
+import MobileNavBar from "./MobileNavBar.jsx";
 import axios from "axios";
 
 export default function Layout() {
